@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:behaviors="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="MovieDX.Forms.Views.MovieListsPage"
+             Title="Custom Lists">
+    <StackLayout>
+        <Label Text="No List found" IsVisible="{Binding HasData}"></Label>
+        <ListView CachingStrategy="RecycleElement" ItemsSource="{Binding MovieList}">
+            <behaviors:Interaction.Behaviors>
+                <behaviors:BehaviorCollection>
+                    <behaviors:EventToCommand EventName="ItemTapped" Command="{Binding SelectListCommand}" PassEventArgument="True" />
+                </behaviors:BehaviorCollection>
+            </behaviors:Interaction.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+				  xmlns:appInfo="clr-namespace:MovieDX.Forms;assembly=MovieDX.Forms"
+                  xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"	
+				  xmlns:behaviors="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
+                  prism:ViewModelLocator.AutowireViewModel="True"
+                  x:Class="MovieDX.Forms.Views.MenuPage"
+	BackgroundColor="Transparent">
+  <MasterDetailPage.Master>
+        <ContentPage Title="MovieDX" Padding="0,20,0,0" BackgroundColor="#13796C" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="7*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackLayout BackgroundColor="Black" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Padding="15">
+                    <ffimageloading:CachedImage 
+								    x:Name="pPhoto" 
+								    HorizontalOptions="Start"
+								    Source="ic_user.png"  
+								    ErrorPlaceholder="error.png" 
+								    TransparencyEnabled="True" 
+								    CacheDuration="1"
+								    Aspect="AspectFill" 
+								    Grid.Column="0"
+								    DownsampleToViewSize="true" />
+                    <StackLayout>
+                        <Label Text="{Binding Path=ActiveUser.UserName}" TextColor="White"></Label>
+                        <Label Text="{Binding Path=ActiveUser.Email}" TextColor="White"></Label>
+                    </StackLayout>
+                </StackLayout>
+
+                <ListView ItemsSource="{Binding MenuItemsList}" x:Name="lsMenu" Grid.Row="1" Grid.Column="0" BackgroundColor="#13796C"
+		            RowHeight="50" 
+		            CachingStrategy="RecycleElement">
+                    <behaviors:Interaction.Behaviors>
+                        <behaviors:BehaviorCollection>
+                            <behaviors:EventToCommand EventName="ItemTapped" Command="{Binding GoToPage}" PassEventArgument="True" />
+                        </behaviors:BehaviorCollection>
+                    </behaviors:Interaction.Behaviors>
+                    <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Margin="2" Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="7*" />
+                                </Grid.ColumnDefinitions>
+                                <ffimageloading:CachedImage 
+								    x:Name="pPhoto" 
+								    HorizontalOptions="Start"
+								    Source="{Binding Icon}"  
+								    ErrorPlaceholder="error.png" 
+								    TransparencyEnabled="True" 
+								    CacheDuration="1"
+								    Aspect="AspectFill" 
+								    Grid.Column="0"
+								    DownsampleToViewSize="true" />
+                                <Label Text="{Binding Title}" Grid.Column="1"></Label>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            </Grid>
+        </ContentPage>
+  </MasterDetailPage.Master>
+</MasterDetailPage>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+          xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"	
+          x:Class="MovieDX.Forms.CustomControls.MovieItem">
+    <Grid Margin="2" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <ffimageloading:CachedImage 
+							x:Name="pPhoto" 
+							HorizontalOptions="Start"
+							Source="{Binding PosterUrl}"  
+							TransparencyEnabled="True" 
+							CacheDuration="1"
+							Aspect="AspectFill" 
+							Grid.Column="0"
+							DownsampleToViewSize="true" />
+
+            <StackLayout Grid.Column="1" Margin="12, 0, 0, 0" VerticalOptions="Start">
+			<StackLayout Orientation="Horizontal" Spacing="3" >
+				<ffimageloading:CachedImage 
+							x:Name="pStar" 
+							HorizontalOptions="Start"
+							Source="star"  
+							ErrorPlaceholder="error.png" 
+							TransparencyEnabled="True" 
+							CacheDuration="1"
+							Aspect="AspectFit"
+							HeightRequest="13"
+							DownsampleToViewSize="true" />
+				<Label Text="{Binding Score}" FontSize="18" TextColor="#58666e" />
+				<Label Text=" - " FontSize="16" TextColor="#58666e" FontAttributes="Bold" />
+				<Label Text="{Binding ComposedTitle}" FontSize="16" TextColor="#58666e" FontAttributes="Bold" />
+			</StackLayout>
+                <Label Text="{Binding GenresCommaSeparated}" FontSize="14" TextColor="Gray" />
+                <StackLayout Orientation="Horizontal">
+
+                <Button Text="+ Watchlist" Command="{Binding AddWatchListCommand}" />
+                    <Button Text="Seen"  />
+                    <Button Text="+ List" />
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+</ViewCell>

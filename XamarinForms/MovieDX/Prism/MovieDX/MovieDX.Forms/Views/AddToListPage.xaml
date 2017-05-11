@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:behaviors="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="MovieDX.Forms.Views.AddToListPage">
+    <StackLayout>
+        <Grid Margin="2" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Entry Text="{Binding NewList}" Placeholder="New List" Grid.Column="0" WidthRequest="250" HorizontalOptions="Fill"></Entry>
+            <Button Text="Create List" Grid.Column="1" Command="{Binding CreateListCommand}"></Button>
+        </Grid>
+        <Label Text="No List found" IsVisible="{Binding HasData}"></Label>
+        <ListView CachingStrategy="RecycleElement" ItemsSource="{Binding MovieList}">
+            <behaviors:Interaction.Behaviors>
+                <behaviors:BehaviorCollection>
+                    <behaviors:EventToCommand EventName="ItemTapped" Command="{Binding AddToListCommand}" PassEventArgument="True" />
+                </behaviors:BehaviorCollection>
+            </behaviors:Interaction.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

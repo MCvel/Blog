@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+            xmlns:views="clr-namespace:MovieDX.Forms.Views"
+			xmlns:appInfo="clr-namespace:MovieDX.Forms;assembly=MovieDX.Forms"
+            prism:ViewModelLocator.AutowireViewModel="True"
+			Title="Movie List"
+			x:Class="MovieDX.Forms.Views.HomePage">
+	<TabbedPage.ToolbarItems>
+	    <ToolbarItem Name="MenuItem1" Order="Primary" Command="{Binding NavigateToUriCommand}" 
+				CommandParameter="{x:Static appInfo:Constants.SearchMoviePage}"
+		Icon="ic_search" Text="Search" Priority="0" />
+	</TabbedPage.ToolbarItems>
+    <views:MostPopularPage Icon="ic_grade.png" />
+    <views:InTheatersPage Icon="ic_theaters.png" />
+    <views:ComingSoonPage Icon="ic_watch_later.png" />
+</TabbedPage>

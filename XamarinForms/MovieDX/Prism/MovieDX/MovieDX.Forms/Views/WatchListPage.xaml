@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" 
+	xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"	
+	prism:ViewModelLocator.AutowireViewModel="True" 
+	x:Class="MovieDX.Forms.Views.WatchListPage"
+	Title="WatchList">
+
+<ListView ItemsSource="{Binding ToWatchList}" x:Name="lsMovies"
+		RowHeight="120" 
+		CachingStrategy="RecycleElement">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid Margin="2" BackgroundColor="White">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="4*" />
+                        </Grid.ColumnDefinitions>
+                        <ffimageloading:CachedImage 
+							x:Name="pPhoto" 
+							HorizontalOptions="Start"
+							Source="{Binding PosterURL}"  
+							ErrorPlaceholder="error.png" 
+							TransparencyEnabled="True" 
+							CacheDuration="1"
+							Aspect="AspectFill" 
+							Grid.Column="0"
+							DownsampleToViewSize="true" />
+
+                        <StackLayout Grid.Column="1" Margin="12, 0, 0, 0" VerticalOptions="Start">
+                            <StackLayout Orientation="Horizontal" Spacing="3" >
+                                <ffimageloading:CachedImage 
+							x:Name="pStar" 
+							HorizontalOptions="Start"
+							Source="star"  
+							ErrorPlaceholder="error.png" 
+							TransparencyEnabled="True" 
+							CacheDuration="1"
+							Aspect="AspectFit"
+							HeightRequest="13"
+							DownsampleToViewSize="true" />
+                                <Label Text="{Binding MovieRate}" FontSize="18" TextColor="#58666e" />
+                                <Label Text=" - " FontSize="18" TextColor="#58666e" FontAttributes="Bold" />
+                                <Label Text="{Binding MovieName}" FontSize="18" TextColor="#58666e" FontAttributes="Bold" />
+                            </StackLayout>
+                            <Label Text="Comedy, Drama, Action, Suspense" FontSize="14" TextColor="Gray" />
+                            <StackLayout Orientation="Horizontal">
+                                <!--<Button Text="+ Watchlist" Command="{Binding Source={x:Reference MyPage}, Path=BindingContext.AddWatchListCommand}" CommandParameter="{Binding .}" />
+                                <Button Text="Seen" Command="{Binding AddSeenCommand}" CommandParameter="{Binding .}" />
+                                <Button Text="+ List" Command="{Binding AddListCommand}" CommandParameter="{Binding .}" />-->
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

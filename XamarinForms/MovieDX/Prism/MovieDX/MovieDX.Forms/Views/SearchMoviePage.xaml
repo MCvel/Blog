@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" 
+	xmlns:behaviors="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
+	xmlns:helpers="clr-namespace:MovieDX.Forms.Helpers;assembly=MovieDX.Forms"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"	
+	prism:ViewModelLocator.AutowireViewModel="True" 
+	x:Class="MovieDX.Forms.Views.SearchMoviePage"
+    x:Name="SearchPage"
+	Title="Movie Search">
+	<StackLayout>
+	<Grid>
+	  <Grid.RowDefinitions>
+	    <RowDefinition Height="*" />
+	  </Grid.RowDefinitions>
+	  <Grid.ColumnDefinitions>
+	    <ColumnDefinition Width="*" />
+	  </Grid.ColumnDefinitions>
+		<SearchBar Grid.Row="0" Grid.Column="0" TextColor="White"  BackgroundColor="#13796C"
+			Text="{Binding SearchField}" Placeholder="Movie Name" PlaceholderColor="Silver" >
+				<StackLayout.TextColor>
+				    <OnPlatform x:TypeArguments="Color" 
+				                Android="White" 
+				                iOS="Black"/>
+				  </StackLayout.TextColor>
+			<behaviors:Interaction.Behaviors>
+            <behaviors:BehaviorCollection>
+                <behaviors:EventToCommand EventName="TextChanged" Command="{Binding SearchMovieCommand}" PassEventArgument="True" />
+            </behaviors:BehaviorCollection>
+        </behaviors:Interaction.Behaviors>
+			</SearchBar>	
+	</Grid>
+        <ListView ItemsSource="{Binding SearchList}" x:Name="lsMovies"
+		RowHeight="120" 
+		CachingStrategy="RecycleElement">
+            <behaviors:Interaction.Behaviors>
+                <behaviors:BehaviorCollection>
+                    <behaviors:EventToCommand EventName="ItemTapped" Command="{Binding GoToDetailPage}" PassEventArgument="True" />
+                </behaviors:BehaviorCollection>
+            </behaviors:Interaction.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Margin="2" BackgroundColor="White">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="4*" />
+                            </Grid.ColumnDefinitions>
+                            <ffimageloading:CachedImage 
+										x:Name="pPhoto" 
+										HorizontalOptions="Start"
+										Source="{Binding PosterUrl}"  
+										ErrorPlaceholder="error.png" 
+										TransparencyEnabled="True" 
+										CacheDuration="1"
+										Aspect="AspectFill" 
+										Grid.Column="0"
+										DownsampleToViewSize="true" />
+
+                            <StackLayout Grid.Column="1" Margin="12, 0, 0, 0" VerticalOptions="Start">
+                                <StackLayout Orientation="Horizontal" Spacing="3" >
+                                    <ffimageloading:CachedImage 
+										x:Name="pStar" 
+										HorizontalOptions="Start"
+										Source="star"  
+										ErrorPlaceholder="error.png" 
+										TransparencyEnabled="True" 
+										CacheDuration="1"
+										Aspect="AspectFit"
+										HeightRequest="13"
+										DownsampleToViewSize="true" />
+                                    <Label Text="{Binding Score}" FontSize="18" TextColor="#58666e" />
+                                    <Label Text=" - " FontSize="16" TextColor="#58666e" FontAttributes="Bold" />
+                                    <Label Text="{Binding ComposedTitle}" FontSize="16" TextColor="#58666e" FontAttributes="Bold" />
+                                </StackLayout>
+                                <Label Text="{Binding GenresCommaSeparated}" FontSize="14" TextColor="Gray" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Button Text="+ Watchlist" Command="{Binding Source={x:Reference SearchPage}, Path=BindingContext.AddWatchListCommand}" CommandParameter="{Binding .}" />
+                                    <Button Text="+ Seen" Command="{Binding Source={x:Reference SearchPage}, Path=BindingContext.AddSeenCommand}" CommandParameter="{Binding .}" />
+                                    <Button Text="+ List" Command="{Binding Source={x:Reference SearchPage}, Path=BindingContext.AddListCommand}" CommandParameter="{Binding .}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
