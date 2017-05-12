@@ -1,6 +1,6 @@
 # MovieDX App made with Xamarin.Forms and Prism
 
-The Application has a very simple authentication, User registration and log in, and the main functionality is to allow the user to see the some movie lists, also to search movies by name, see details, add movies to Watchlist, seen and custom lists. 
+This Application has a very simple authentication, User registration and log in; the main functionality is to allow the user to see some movie lists, to search movies by name, see details, add movies to Watchlist, Seen and Custom lists. 
 
 ## More information
 
